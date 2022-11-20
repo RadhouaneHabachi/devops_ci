@@ -1,11 +1,19 @@
 pipeline {
    agent any
+    environment {
+        git_url = "https://github.com/RadhouaneHabachi/devops_ci.git"
+        git_branch = "main"
+        imageName = "redone/tpatachat"
+        registryCredentials = "NEXUS_CRED"
+        nexus_registry = "http://localhost:1111"
+        dockerImage = ""
+    }
    stages {
     stage('Checkout SCM') {
       steps {
-            echo "Clone git repository [main branch]";
-            git branch: "main",
-            url: "https://github.com/RadhouaneHabachi/devops_ci.git";
+            echo "Clone git repository";
+            git branch: git_branch,
+            url: git_url;
             script {
                 sh "ls -lart ./*"
                 sh "pwd"
@@ -41,7 +49,7 @@ pipeline {
       steps{
         script {
           dockerImage = docker.build "redone/tpatachat:${env.BUILD_NUMBER}"
-          sh "Docker image : ${dockImage} was created successfully !"
+          sh "Docker image : ${dockerImage} was created successfully !"
         }
       }
     }
@@ -49,9 +57,9 @@ pipeline {
      stage('Upload docker image to Nexus') {
      steps{  
          script {
-             docker.withRegistry('http://localhost:1111', "NEXUS_CRED" ) {
-             dockerImage.push("${env.BUILD_NUMBER}")
-             sh "Docker image : ${dockImage} was pushed to Nexus repository successfully !"
+             docker.withRegistry(nexus_registry, registryCredentials ) {
+             dockerImage.push(${env.BUILD_NUMBER})
+             sh "Docker image : ${dockerImage} was pushed to Nexus repository successfully !"
           }
         }
       }
