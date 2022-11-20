@@ -6,7 +6,7 @@ pipeline {
     environment {
         git_url = "https://github.com/RadhouaneHabachi/devops_ci.git"
         git_branch = "main"
-        imageName = "redone/tpatachat"
+        imageName = "redone/tp-achat"
         registryCredentials = "NEXUS_CRED"
         nexus_registry = "http://localhost:1111"
         dockerImage = ""
@@ -51,7 +51,7 @@ pipeline {
      stage('Build docker image') {
       steps{
         script {
-          dockerImage = docker.build "redone/tpatachat:${env.BUILD_NUMBER}"
+          dockerImage = docker.build "${imageName}:${env.BUILD_NUMBER}"
         }
       }
     }
@@ -61,6 +61,7 @@ pipeline {
          script {
              docker.withRegistry(nexus_registry, registryCredentials ) {
              dockerImage.push("${env.BUILD_NUMBER}")
+             sh "docker rmi ${imageName}:${env.BUILD_NUMBER} -f"
           }
         }
       }
