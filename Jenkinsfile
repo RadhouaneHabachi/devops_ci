@@ -1,5 +1,8 @@
 pipeline {
    agent any
+   options {
+        ansiColor('xterm')
+    }
     environment {
         git_url = "https://github.com/RadhouaneHabachi/devops_ci.git"
         git_branch = "main"
