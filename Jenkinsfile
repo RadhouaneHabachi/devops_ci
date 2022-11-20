@@ -11,6 +11,7 @@ pipeline {
         nexus_registry = "http://localhost:1111"
         dockerImage = ""
     }
+    
    stages {
     stage('Clone git repository') {
       steps {
