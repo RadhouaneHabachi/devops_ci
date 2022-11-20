@@ -12,9 +12,8 @@ pipeline {
         dockerImage = ""
     }
    stages {
-    stage('Checkout SCM') {
+    stage('Clone git repository') {
       steps {
-            echo "Clone git repository";
             git branch: git_branch,
             url: git_url;
             script {
@@ -40,7 +39,7 @@ pipeline {
             }
        }
     }
-    
+
     stage ('Scan and Build Jar File') {
         steps {
            withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarQubeToken') {
