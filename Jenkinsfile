@@ -49,7 +49,6 @@ pipeline {
       steps{
         script {
           dockerImage = docker.build "redone/tpatachat:${env.BUILD_NUMBER}"
-          sh "Docker image : ${dockerImage} was created successfully !"
         }
       }
     }
@@ -59,7 +58,6 @@ pipeline {
          script {
              docker.withRegistry(nexus_registry, registryCredentials ) {
              dockerImage.push(${env.BUILD_NUMBER})
-             sh "Docker image : ${dockerImage} was pushed to Nexus repository successfully !"
           }
         }
       }
