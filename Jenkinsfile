@@ -9,6 +9,7 @@ pipeline {
             script {
                 sh "ls -lart ./*"
                 sh "pwd"
+                sh "whoami"
             }
        }
     }
@@ -29,11 +30,31 @@ pipeline {
        }
     }
     stage ('Scan and Build Jar File') {
-            steps {
-               withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarQubeToken') {
-                sh 'mvn clean package sonar:sonar -DskipTests'
-                }
+        steps {
+           withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarQubeToken') {
+            sh 'mvn clean package sonar:sonar -DskipTests'
             }
+        }
+    }
+    
+     stage('Build docker image') {
+      steps{
+        script {
+          dockerImage = docker.build "redone/tpatachat:${env.BUILD_NUMBER}"
+          sh "Docker image : ${dockImage} was created successfully !"
+        }
+      }
+    }
+    
+     stage('Upload docker image to Nexus') {
+     steps{  
+         script {
+             docker.withRegistry('http://localhost:1111', "NEXUS_CRED" ) {
+             dockerImage.push("${env.BUILD_NUMBER}")
+             sh "Docker image : ${dockImage} was pushed to Nexus repository successfully !"
+          }
+        }
+      }
     }
     
   }
