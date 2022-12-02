@@ -68,7 +68,7 @@ pipeline {
   }
   post {
         always {
-            emailext body: 'The pipepline result is' + currentBuild.result, to: 'radhouane.habachi@esprit.tn', subject: 'CI pipeline'
+            emailext body: 'The pipepline result is', to: 'radhouane.habachi@esprit.tn', subject: 'CI pipeline'
         }
     }
 }
