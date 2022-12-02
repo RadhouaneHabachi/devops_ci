@@ -66,9 +66,4 @@ pipeline {
       }
     } 
   }
-  post {
-        always {
-            emailext body: 'The pipepline result is', to: 'habachiradhouane@gmail.com', subject: 'CI pipeline'
-        }
-    }
 }
