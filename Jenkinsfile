@@ -8,7 +8,7 @@ pipeline {
         git_branch = "main"
         imageName = "redone/tp-achat"
         registryCredentials = "NEXUS_CRED"
-        nexus_registry = "localhost:1111"
+        nexus_registry = "http://localhost:1111"
         dockerImage = ""
     }
 
@@ -61,7 +61,7 @@ pipeline {
              docker.withRegistry(nexus_registry, registryCredentials ) {
              dockerImage.push("${env.BUILD_NUMBER}")
              sh "docker rmi ${imageName}:${env.BUILD_NUMBER} -f"
-             sh "docker rmi ${imageName}/${imageName}:${env.BUILD_NUMBER} -f"
+             sh "docker rmi localhost:1111/${imageName}:${env.BUILD_NUMBER} -f"
           }
         }
       }
