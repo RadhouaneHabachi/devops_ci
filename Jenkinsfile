@@ -22,7 +22,7 @@ pipeline {
             }
        }
     }
-    
+      
     stage('Compile maven project') {
       steps {
             script {
