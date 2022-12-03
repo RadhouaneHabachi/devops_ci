@@ -47,7 +47,7 @@ pipeline {
         }
     }
     
-     stage('Build docker image') {
+    stage('Build docker image') {
       steps{
         script {
           dockerImage = docker.build "${imageName}:${env.BUILD_NUMBER}"
@@ -55,7 +55,7 @@ pipeline {
       }
     }
     
-     stage('Upload docker image to Nexus') {
+    stage('Upload docker image to Nexus') {
      steps{  
          script {
              docker.withRegistry(nexus_registry, registryCredentials ) {
