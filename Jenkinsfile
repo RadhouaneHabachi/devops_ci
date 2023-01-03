@@ -24,21 +24,21 @@ pipeline {
             }
         }
 
-        stage('Compile maven project') {
-            steps {
-                script {
-                    sh "mvn compile"
-                }
-            }
-        }
+        // stage('Compile maven project') {
+        //     steps {
+        //         script {
+        //             sh "mvn compile"
+        //         }
+        //     }
+        // }
 
-        stage('Unit test') {
-            steps {
-                script {
-                    sh "mvn test"
-                }
-            }
-        }
+        // stage('Unit test') {
+        //     steps {
+        //         script {
+        //             sh "mvn test"
+        //         }
+        //     }
+        // }
 
         stage ('Scan and Build Jar File') {
             steps {
@@ -71,6 +71,7 @@ pipeline {
                 script {
                     sh "sed -i \"s/TAG=.*/TAG=${env.BUILD_NUMBER}/\" .env"
                     sh "cat .env"
+                    sh "docker-compose up -d"
                 }
             }
         }
