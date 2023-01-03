@@ -65,14 +65,24 @@ pipeline {
                 }
             }
         }
-    }
 
-    post {
-        always {
-            script {
-                sh "docker rmi ${imageName}:${env.BUILD_NUMBER} -f"
-                sh "docker rmi localhost:1111/${imageName}:${env.BUILD_NUMBER} -f"
+        stage('Deploy app to environement') {
+            steps{
+                script {
+                    sh 'sed -i "s/TAG=.*/TAG=${env.BUILD_NUMBER}/" .env'
+                    sh "cat .env"
+                    }
+                }
             }
         }
     }
+
+    // post {
+    //     always {
+    //         script {
+    //             sh "docker rmi ${imageName}:${env.BUILD_NUMBER} -f"
+    //             sh "docker rmi localhost:1111/${imageName}:${env.BUILD_NUMBER} -f"
+    //         }
+    //     }
+    // }
 }
