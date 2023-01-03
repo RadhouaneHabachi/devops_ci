@@ -69,7 +69,7 @@ pipeline {
         stage('Deploy app to environement') {
             steps{
                 script {
-                    sh 'sed -i "s/TAG=.*/TAG=${env.BUILD_NUMBER}/" .env'
+                    sh "sed -i \"s/TAG=.*/TAG=${env.BUILD_NUMBER}/\" .env"
                     sh "cat .env"
                 }
             }
