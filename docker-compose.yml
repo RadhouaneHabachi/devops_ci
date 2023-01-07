@@ -41,7 +41,7 @@ services:
     restart: on-failure
     env_file: ./.env
     ports:
-      - 8080:80
+      - 6969:80
     environment:
       SPRING_APPLICATION_JSON: '{
         "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
