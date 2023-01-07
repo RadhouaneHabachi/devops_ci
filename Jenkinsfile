@@ -40,34 +40,34 @@ pipeline {
         //     }
         // }
 
-        stage ('Scan and Build Jar File') {
-            steps {
-                // withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarQubeToken') {
-                //     sh 'mvn clean package sonar:sonar -DskipTests'
-                // }
-                script{
-                    sh 'mvn clean package -DskipTests'
-                }
-            }
-        }
+        // stage ('Scan and Build Jar File') {
+        //     steps {
+        //         // withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarQubeToken') {
+        //         //     sh 'mvn clean package sonar:sonar -DskipTests'
+        //         // }
+        //         script{
+        //             sh 'mvn clean package -DskipTests'
+        //         }
+        //     }
+        // }
 
-        stage('Build docker image') {
-            steps{
-                script {
-                    dockerImage = docker.build "${imageName}:${env.BUILD_NUMBER}"
-                }
-            }
-        }
+        // stage('Build docker image') {
+        //     steps{
+        //         script {
+        //             dockerImage = docker.build "${imageName}:${env.BUILD_NUMBER}"
+        //         }
+        //     }
+        // }
 
-        stage('Upload docker image to Nexus') {
-            steps{
-                script {
-                    docker.withRegistry(nexus_registry, registryCredentials ) {
-                        dockerImage.push("${env.BUILD_NUMBER}")
-                    }
-                }
-            }
-        }
+        // stage('Upload docker image to Nexus') {
+        //     steps{
+        //         script {
+        //             docker.withRegistry(nexus_registry, registryCredentials ) {
+        //                 dockerImage.push("${env.BUILD_NUMBER}")
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Deploy app to environement') {
             steps{
