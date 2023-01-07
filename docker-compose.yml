@@ -33,7 +33,7 @@ services:
       - .m2:/root/.m2
     networks:
       network:
-        ipv4_address: 172.17.0.69
+        ipv4_address: 10.5.0.5
     stdin_open: true
     tty: true
 
@@ -58,7 +58,7 @@ services:
     
     networks:
       network:
-        ipv4_address: 172.17.0.70
+        ipv4_address: 10.5.0.6
         
     stdin_open: true
     tty: true
@@ -66,4 +66,12 @@ services:
   
 volumes:
   db:
+  
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
   
