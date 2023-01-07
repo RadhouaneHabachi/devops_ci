@@ -1,7 +1,9 @@
-FROM node:14.2.0-alpine3.11
-
-RUN npm install -g @angular/cli
-WORKDIR /backend
+# Stage 1
+FROM node:14.15.4 as node
+WORKDIR /app
 COPY . .
-RUN mvn clean install
-CMD mvn spring-boot:run
+RUN npm install
+RUN npm run build --prod
+# Stage 2
+FROM nginx:alpine
+COPY --from=node /app/dist/crudtuto-front /usr/share/nginx/html
