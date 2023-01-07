@@ -17,7 +17,7 @@ services:
     depends_on:
       - mysqldb
     build: ./backend
-    restart: on-failure
+    restart: unless-stopped
     env_file: ./.env
     ports:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
@@ -38,10 +38,11 @@ services:
     depends_on:
       - backend-app
     build: ./frontend
-    restart: on-failure
+    restart: unless-stopped
     env_file: ./.env
     ports:
       - 6969:80
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
     environment:
       SPRING_APPLICATION_JSON: '{
         "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
