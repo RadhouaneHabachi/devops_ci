@@ -31,6 +31,9 @@ services:
       }'
     volumes:
       - .m2:/root/.m2
+    networks:
+      network:
+        ipv4_address: 172.17.0.69
     stdin_open: true
     tty: true
 
@@ -52,9 +55,24 @@ services:
       }'
     volumes:
       - .m2:/root/.m2
+    
+    networks:
+      network:
+        ipv4_address: 172.17.0.70
+        
     stdin_open: true
     tty: true
 
   
 volumes:
   db:
+  
+  
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.0.0/16
+          gateway: 172.17.0.1
