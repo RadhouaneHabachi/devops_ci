@@ -74,7 +74,7 @@ pipeline {
                 script {
                     sh "sed -i \"s/TAG=.*/TAG=${env.BUILD_NUMBER}/\" .env"
                     sh "cat .env"
-                    sh "docker-compose up -d --build"
+                    sh "docker-compose up -d"
                 }
             }
         }
