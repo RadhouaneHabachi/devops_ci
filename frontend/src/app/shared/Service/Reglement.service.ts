@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
   providedIn: 'root'
 })
 export class ReglementService {
-  readonly API_URL = 'http://10.5.0.5:8089/SpringMVC/reglement';
+  readonly API_URL = 'http://devops.server:8089/SpringMVC/reglement';
 
   constructor(private httpClient: HttpClient) {
   }
