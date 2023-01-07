@@ -12,6 +12,10 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
       - db:/var/lib/mysql
+    
+    networks:
+      network:
+        ipv4_address: 10.5.0.4
  
   backend-app:
     depends_on:
