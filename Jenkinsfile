@@ -86,8 +86,10 @@ pipeline {
     post {
         always {
             script {
-                sh "docker rmi ${imageName}:${env.BUILD_NUMBER} -f"
-                sh "docker rmi localhost:1111/${imageName}:${env.BUILD_NUMBER} -f"
+                sh "docker rmi ${backendDockerImage}:${env.BUILD_NUMBER} -f"
+                sh "docker rmi localhost:1111/${backendDockerImage}:${env.BUILD_NUMBER} -f"
+                sh "docker rmi ${frontendDockerImage}:${env.BUILD_NUMBER} -f"
+                sh "docker rmi localhost:1111/${frontendDockerImage}:${env.BUILD_NUMBER} -f"
             }
         }
     }
