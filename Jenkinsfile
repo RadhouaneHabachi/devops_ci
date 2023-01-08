@@ -106,7 +106,7 @@ pipeline {
             }
             mail to: "habachiradhouane@gmail.com",
             subject: "App deployment",
-            body: "${mail_body}"
+            body: mail_body
         }
     }
 }
