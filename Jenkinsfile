@@ -105,7 +105,7 @@ pipeline {
                 mail_body += "Build URL: ${currentBuild.absoluteUrl}"
             }
             mail to: "habachiradhouane@gmail.com",
-            subject: "App deployment",
+            subject: "App deployment N°${env.BUILD_NUMBER}",
             body: mail_body
         }
     }
