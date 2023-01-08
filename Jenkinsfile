@@ -13,8 +13,8 @@ pipeline {
         nexus_registry = "localhost:1111"
         nexus_username = "admin"
         nexus_password = "root"
-        backendDockerImage = ""
-        frontendDockerImage = ""
+        backendDockerImage = null
+        frontendDockerImage = null
     }
 
     stages {
