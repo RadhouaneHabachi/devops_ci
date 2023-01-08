@@ -20,7 +20,7 @@ services:
   backend-app:
     depends_on:
       - mysqldb
-    build: ./backend
+    image: redone/backend:$TAG
     restart: unless-stopped
     env_file: ./.env
     ports:
@@ -44,7 +44,7 @@ services:
   frontend-app:
     depends_on:
       - backend-app
-    build: ./frontend
+    image: redone/frontend:$TAG
     restart: unless-stopped
     env_file: ./.env
     ports:

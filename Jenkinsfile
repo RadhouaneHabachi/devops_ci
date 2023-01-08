@@ -11,7 +11,8 @@ pipeline {
         frontend_imageName = "redone/frontend"
         registryCredentials = "NEXUS_CRED"
         nexus_registry = "http://localhost:1111"
-        dockerImage = ""
+        backendDockerImage = ""
+        frontendDockerImage = ""
     }
 
     stages {
@@ -37,7 +38,7 @@ pipeline {
         stage('Build backend docker image') {
             steps{
                 script {
-                    dockerImage = docker.build("${backend_imageName}:${env.BUILD_NUMBER}", "backend/")
+                    backendDockerImage = docker.build("${backend_imageName}:${env.BUILD_NUMBER}", "backend/")
                 }
             }
         }
@@ -45,20 +46,30 @@ pipeline {
         stage('Build frontend docker image') {
             steps{
                 script {
-                    dockerImage = docker.build("${frontend_imageName}:${env.BUILD_NUMBER}", "frontend/")
+                    frontendDockerImage = docker.build("${frontend_imageName}:${env.BUILD_NUMBER}", "frontend/")
                 }
             }
         }
 
-        // stage('Upload docker image to Nexus') {
-        //     steps{
-        //         script {
-        //             docker.withRegistry(nexus_registry, registryCredentials ) {
-        //                 dockerImage.push("${env.BUILD_NUMBER}")
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Upload backend docker image to Nexus') {
+            steps{
+                script {
+                    docker.withRegistry(nexus_registry, registryCredentials ) {
+                        backendDockerImage.push("${env.BUILD_NUMBER}")
+                    }
+                }
+            }
+        }
+
+        stage('Upload frontend docker image to Nexus') {
+            steps{
+                script {
+                    docker.withRegistry(nexus_registry, registryCredentials ) {
+                        frontendDockerImage.push("${env.BUILD_NUMBER}")
+                    }
+                }
+            }
+        }
 
         // stage('Deploy app to environement') {
         //     steps{
