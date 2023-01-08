@@ -54,7 +54,7 @@ pipeline {
         stage('Upload backend docker image to Nexus') {
             steps{
                 script {
-                    docker.withRegistry(nexus_registry, registryCredentials ) {
+                    docker.withRegistry("http://${nexus_registry}", registryCredentials ) {
                         backendDockerImage.push("${env.BUILD_NUMBER}")
                     }
                 }
@@ -64,7 +64,7 @@ pipeline {
         stage('Upload frontend docker image to Nexus') {
             steps{
                 script {
-                    docker.withRegistry(nexus_registry, registryCredentials ) {
+                    docker.withRegistry("http://${nexus_registry}", registryCredentials ) {
                         frontendDockerImage.push("${env.BUILD_NUMBER}")
                     }
                 }
