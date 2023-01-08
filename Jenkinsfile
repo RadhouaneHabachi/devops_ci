@@ -15,6 +15,7 @@ pipeline {
         nexus_password = "root"
         backendDockerImage = null
         frontendDockerImage = null
+        mail_body = ""
     }
 
     stages {
@@ -94,19 +95,18 @@ pipeline {
     post {
         always {
             script{
-                def text = "";
                 if (currentBuild.result == "FAILURE" || currentBuild.result == "UNSTABLE") {
-                    text += "*TP-ACHAT* Build#${currentBuild.number} Status: *Failed*\n"
+                    mail_body += "*TP-ACHAT* Build#${currentBuild.number} Status: *Failed*\n"
                 } else if (currentBuild.result == "SUCCESS") {
-                    text += "*TP-ACHAT* Build#${currentBuild.number} Status: *Succeeded*\n"
+                    mail_body += "*TP-ACHAT* Build#${currentBuild.number} Status: *Succeeded*\n"
                 } else if (currentBuild.result == "ABORTED") {
-                    text += "*TP-ACHAT* Build#${currentBuild.number} Status: *Aborted*\n"
+                    mail_body += "*TP-ACHAT* Build#${currentBuild.number} Status: *Aborted*\n"
                 }
-                text += "Build URL: ${currentBuild.absoluteUrl}"
+                mail_body += "Build URL: ${currentBuild.absoluteUrl}"
             }
             mail to: "habachiradhouane@gmail.com",
             subject: "App deployment",
-            body: "${text}"
+            body: "${mail_body}"
         }
     }
 }
