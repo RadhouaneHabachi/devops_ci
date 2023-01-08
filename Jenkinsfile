@@ -7,7 +7,8 @@ pipeline {
     environment {
         git_url = "https://github.com/RadhouaneHabachi/devops_ci.git"
         git_branch = "main"
-        imageName = "redone/tp-achat"
+        backend_imageName = "redone/backend"
+        frontend_imageName = "redone/frontend"
         registryCredentials = "NEXUS_CRED"
         nexus_registry = "http://localhost:1111"
         dockerImage = ""
@@ -24,40 +25,30 @@ pipeline {
             }
         }
 
-        // stage('Compile maven project') {
-        //     steps {
-        //         script {
-        //             sh "mvn compile"
-        //         }
-        //     }
-        // }
+        stage('Compile maven project') {
+            steps {
+                script {
+                    sh "cd backend; mvn compile; cd .."
+                }
+            }
+        }
 
-        // stage('Unit test') {
-        //     steps {
-        //         script {
-        //             sh "mvn test"
-        //         }
-        //     }
-        // }
 
-        // stage ('Scan and Build Jar File') {
-        //     steps {
-        //         // withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarQubeToken') {
-        //         //     sh 'mvn clean package sonar:sonar -DskipTests'
-        //         // }
-        //         script{
-        //             sh 'mvn clean package -DskipTests'
-        //         }
-        //     }
-        // }
+        stage('Build backend docker image') {
+            steps{
+                script {
+                    dockerImage = docker.build("${backend_imageName}:${env.BUILD_NUMBER}", "backend/Dockerfile")
+                }
+            }
+        }
 
-        // stage('Build docker image') {
-        //     steps{
-        //         script {
-        //             dockerImage = docker.build "${imageName}:${env.BUILD_NUMBER}"
-        //         }
-        //     }
-        // }
+        stage('Build frontend docker image') {
+            steps{
+                script {
+                    dockerImage = docker.build("${frontend_imageName}:${env.BUILD_NUMBER}", "frontend/Dockerfile")
+                }
+            }
+        }
 
         // stage('Upload docker image to Nexus') {
         //     steps{
@@ -69,16 +60,16 @@ pipeline {
         //     }
         // }
 
-        stage('Deploy app to environement') {
-            steps{
-                script {
-                    sh "sed -i \"s/TAG=.*/TAG=${env.BUILD_NUMBER}/\" .env"
-                    sh "cat .env"
-                    sh "docker-compose down"
-                    sh "docker-compose up -d --build"
-                }
-            }
-        }
+        // stage('Deploy app to environement') {
+        //     steps{
+        //         script {
+        //             sh "sed -i \"s/TAG=.*/TAG=${env.BUILD_NUMBER}/\" .env"
+        //             sh "cat .env"
+        //             sh "docker-compose down"
+        //             sh "docker-compose up -d --build"
+        //         }
+        //     }
+        // }
     }
 
     // post {
