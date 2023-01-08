@@ -96,11 +96,11 @@ pipeline {
         always {
             script{
                 if (currentBuild.result == "FAILURE" || currentBuild.result == "UNSTABLE") {
-                    mail_body += "*TP-ACHAT* Build#${currentBuild.number} Status: *Failed*\n"
+                    mail_body += "Project name : *TP-ACHAT* \nBuild#${currentBuild.number} \nStatus: *Failed*\n"
                 } else if (currentBuild.result == "SUCCESS") {
-                    mail_body += "*TP-ACHAT* Build#${currentBuild.number} Status: *Succeeded*\n"
+                    mail_body += "Project name : *TP-ACHAT* \nBuild#${currentBuild.number} \nStatus: *Successeded*\n"
                 } else if (currentBuild.result == "ABORTED") {
-                    mail_body += "*TP-ACHAT* Build#${currentBuild.number} Status: *Aborted*\n"
+                    mail_body += "Project name : *TP-ACHAT* \nBuild#${currentBuild.number} \nStatus: *Aborted*\n"
                 }
                 mail_body += "Build URL: ${currentBuild.absoluteUrl}"
             }
