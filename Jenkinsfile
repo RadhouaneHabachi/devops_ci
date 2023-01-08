@@ -11,6 +11,8 @@ pipeline {
         frontend_imageName = "redone/frontend"
         registryCredentials = "NEXUS_CRED"
         nexus_registry = "localhost:1111"
+        nexus_username = "admin"
+        nexus_password = "root"
         backendDockerImage = ""
         frontendDockerImage = ""
     }
@@ -81,6 +83,7 @@ pipeline {
                     sh "sed -i \"s/TAG=.*/TAG=${env.BUILD_NUMBER}/\" .env"
                     sh "sed -i \"s/NEXUS_REPOSITORY=.*/NEXUS_REPOSITORY=${nexus_registry}/\" .env"
                     sh "cat .env"
+                    sh "docker login http://${nexus_registry} --username ${nexus_username} --password ${nexus_password}"
                     sh "docker-compose down"
                     sh "docker-compose up -d --build"
                 }
