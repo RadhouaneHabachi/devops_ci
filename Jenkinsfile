@@ -10,7 +10,7 @@ pipeline {
         backend_imageName = "redone/backend"
         frontend_imageName = "redone/frontend"
         registryCredentials = "NEXUS_CRED"
-        nexus_registry = "http://localhost:1111"
+        nexus_registry = "localhost:1111"
         backendDockerImage = ""
         frontendDockerImage = ""
     }
@@ -71,26 +71,27 @@ pipeline {
             }
         }
 
-        // stage('Deploy app to environement') {
-        //     steps{
-        //         script {
-        //             sh "sed -i \"s/TAG=.*/TAG=${env.BUILD_NUMBER}/\" .env"
-        //             sh "cat .env"
-        //             sh "docker-compose down"
-        //             sh "docker-compose up -d --build"
-        //         }
-        //     }
-        // }
-    }
-
-    post {
-        always {
-            script {
-                sh "docker rmi ${backend_imageName}:${env.BUILD_NUMBER} -f"
-                sh "docker rmi localhost:1111/${backend_imageName}:${env.BUILD_NUMBER} -f"
-                sh "docker rmi ${frontend_imageName}:${env.BUILD_NUMBER} -f"
-                sh "docker rmi localhost:1111/${frontend_imageName}:${env.BUILD_NUMBER} -f"
+        stage('Deploy app to environement') {
+            steps{
+                script {
+                    sh "sed -i \"s/TAG=.*/TAG=${env.BUILD_NUMBER}/\" .env"
+                    sh "sed -i \"s/NEXUS_REPOSITORY=.*/NEXUS_REPOSITORY=${nexus_registry}/\" .env"
+                    sh "cat .env"
+                    sh "docker-compose down"
+                    sh "docker-compose up -d --build"
+                }
             }
         }
     }
+
+    // post {
+    //     always {
+    //         script {
+    //             sh "docker rmi ${backend_imageName}:${env.BUILD_NUMBER} -f"
+    //             sh "docker rmi localhost:1111/${backend_imageName}:${env.BUILD_NUMBER} -f"
+    //             sh "docker rmi ${frontend_imageName}:${env.BUILD_NUMBER} -f"
+    //             sh "docker rmi localhost:1111/${frontend_imageName}:${env.BUILD_NUMBER} -f"
+    //         }
+    //     }
+    // }
 }
