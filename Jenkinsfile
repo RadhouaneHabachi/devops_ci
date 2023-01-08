@@ -59,8 +59,8 @@ pipeline {
                     docker.withRegistry("http://${nexus_registry}", registryCredentials ) {
                         backendDockerImage.push("${env.BUILD_NUMBER}")
                     }
-                    sh "docker rmi ${backend_imageName}:${env.BUILD_NUMBER} -f"
-                    sh "docker rmi localhost:1111/${backend_imageName}:${env.BUILD_NUMBER} -f"
+                    // sh "docker rmi ${backend_imageName}:${env.BUILD_NUMBER} -f"
+                    // sh "docker rmi localhost:1111/${backend_imageName}:${env.BUILD_NUMBER} -f"
                 }
             }
         }
@@ -71,8 +71,8 @@ pipeline {
                     docker.withRegistry("http://${nexus_registry}", registryCredentials ) {
                         frontendDockerImage.push("${env.BUILD_NUMBER}")
                     }
-                    sh "docker rmi ${frontend_imageName}:${env.BUILD_NUMBER} -f"
-                    sh "docker rmi localhost:1111/${frontend_imageName}:${env.BUILD_NUMBER} -f"
+                    // sh "docker rmi ${frontend_imageName}:${env.BUILD_NUMBER} -f"
+                    // sh "docker rmi localhost:1111/${frontend_imageName}:${env.BUILD_NUMBER} -f"
                 }
             }
         }
