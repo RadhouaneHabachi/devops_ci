@@ -98,7 +98,7 @@ pipeline {
                 if (currentBuild.result == "FAILURE" || currentBuild.result == "UNSTABLE") {
                     mail_body += "Project name : *TP-ACHAT* \nBuild#${currentBuild.number} \nStatus: *Failed*\n"
                 } else if (currentBuild.result == "SUCCESS") {
-                    mail_body += "Project name : *TP-ACHAT* \nBuild#${currentBuild.number} \nStatus: *Successeded*\n"
+                    mail_body += "Project name : *TP-ACHAT* \nBuild#${currentBuild.number} \nStatus: *Succeeded*\n"
                 } else if (currentBuild.result == "ABORTED") {
                     mail_body += "Project name : *TP-ACHAT* \nBuild#${currentBuild.number} \nStatus: *Aborted*\n"
                 }
