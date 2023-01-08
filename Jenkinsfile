@@ -93,9 +93,20 @@ pipeline {
 
     post {
         always {
+            script{
+                def text = "";
+                if (currentBuild.result == "FAILURE" || currentBuild.result == "UNSTABLE") {
+                    text += "*TP-ACHAT* Build#${currentBuild.number} Status: *Failed*\n"
+                } else if (currentBuild.result == "SUCCESS") {
+                    text += "*TP-ACHAT* Build#${currentBuild.number} Status: *Succeeded*\n"
+                } else if (currentBuild.result == "ABORTED") {
+                    text += "*TP-ACHAT* Build#${currentBuild.number} Status: *Aborted*\n"
+                }
+                text += "Build URL: ${currentBuild.absoluteUrl}"
+            }
             mail to: "habachiradhouane@gmail.com",
-            subject: "Test Email",
-            body: "Test"
+            subject: "App deployment",
+            body: "${text}"
         }
     }
 }
