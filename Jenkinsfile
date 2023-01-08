@@ -37,7 +37,7 @@ pipeline {
         stage('Build backend docker image') {
             steps{
                 script {
-                    dockerImage = docker.build("${backend_imageName}:${env.BUILD_NUMBER}", "backend/Dockerfile")
+                    dockerImage = docker.build("${backend_imageName}:${env.BUILD_NUMBER}", "backend/")
                 }
             }
         }
@@ -45,7 +45,7 @@ pipeline {
         stage('Build frontend docker image') {
             steps{
                 script {
-                    dockerImage = docker.build("${frontend_imageName}:${env.BUILD_NUMBER}", "frontend/Dockerfile")
+                    dockerImage = docker.build("${frontend_imageName}:${env.BUILD_NUMBER}", "frontend/")
                 }
             }
         }
