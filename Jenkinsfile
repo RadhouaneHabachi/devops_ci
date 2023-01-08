@@ -1,3 +1,4 @@
+def mail_body = ""
 pipeline {
     agent any
     options {
@@ -15,7 +16,6 @@ pipeline {
         nexus_password = "root"
         backendDockerImage = null
         frontendDockerImage = null
-        mail_body = ""
     }
 
     stages {
