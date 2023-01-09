@@ -64,7 +64,7 @@ pipeline {
                     sh "docker rmi ${nexus_registry}/${backend_imageName}:${env.BUILD_NUMBER} -f"
                 }
             }
-        }
+        } 
 
         stage('Upload frontend docker image to Nexus') {
             steps{
