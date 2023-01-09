@@ -41,8 +41,7 @@ services:
     restart: unless-stopped
     env_file: ./.env
     ports:
-      - $ANGULAR_DOCKER_PORT:$ANGULAR_LOCAL_PORT    
-        
+      - $ANGULAR_DOCKER_PORT:$ANGULAR_LOCAL_PORT
     stdin_open: true
     tty: true
 
