@@ -60,8 +60,8 @@ pipeline {
                     docker.withRegistry("http://${nexus_registry}", registryCredentials ) {
                         backendDockerImage.push("${env.BUILD_NUMBER}")
                     }
-                    // sh "docker rmi ${backend_imageName}:${env.BUILD_NUMBER} -f"
-                    // sh "docker rmi ${nexus_registry}/${backend_imageName}:${env.BUILD_NUMBER} -f"
+                    sh "docker rmi ${backend_imageName}:${env.BUILD_NUMBER} -f"
+                    sh "docker rmi ${nexus_registry}/${backend_imageName}:${env.BUILD_NUMBER} -f"
                 }
             }
         }
