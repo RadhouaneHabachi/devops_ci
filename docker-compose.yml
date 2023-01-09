@@ -48,8 +48,7 @@ services:
     restart: unless-stopped
     env_file: ./.env
     ports:
-      - 8088:80
-    
+      - $ANGULAR_DOCKER_PORT:$ANGULAR_LOCAL_PORT    
     networks:
       network:
         ipv4_address: 10.5.0.6
@@ -57,7 +56,6 @@ services:
     stdin_open: true
     tty: true
 
-  
 volumes:
   db:
   
